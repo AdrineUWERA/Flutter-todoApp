@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     Todo('Buy groceries', false, 'I will but groceries', 2),
     Todo('Do laundry', true, 'I will do the laundry', 1),
   ];
-
+  bool? tapped;
 // App widget tree
   @override
   Widget build(BuildContext context) {
@@ -54,56 +54,53 @@ class _HomePageState extends State<HomePage> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          Container(
-                            child: Card(
+                          Card(
+                              // margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                               elevation: 2,
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Theme(
-                                data: ThemeData(
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
+                              child: ListTile(
+                                autofocus: false,
+                                leading: Text(
+                                  todos[index].priority.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Color(0xFF476EBE),
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                child: CheckboxListTile(
-                                  contentPadding: const EdgeInsets.all(20),
-                                  autofocus: false,
-                                  secondary: Text(
-                                    todos[index].priority.toString(),
-                                    style: TextStyle(
-                                        color: Color(0xFF476EBE),
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                title: Text(
+                                  todos[index].title,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text(
+                                  todos[index].description,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                                trailing: Checkbox(
                                   value: todos[index].isCompleted,
-                                  title: Text(
-                                    todos[index].title,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: Text(
-                                    todos[index].description,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.w200),
-                                  ),
-                                  activeColor: Color(0xFF476EBE),
-                                  checkColor: Colors.white,
-                                  onChanged: (value) {
+                                  onChanged: (bool? value) {
                                     setState(() {
                                       todos[index].isCompleted = value;
                                     });
                                   },
-                                  checkboxShape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4)),
-                                ),
-                              ),
-                            ),
-                          ),
+                                ), 
+                                selected: true,
+                                onTap: () {
+                                  setState(() {
+                                    tapped = true;
+                                  });
+                                },
+                              )),
                           SizedBox(
                             height: 15,
                           )
@@ -118,3 +115,5 @@ class _HomePageState extends State<HomePage> {
     ); //MaterialApp
   }
 }
+
+
